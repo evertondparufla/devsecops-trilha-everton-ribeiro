@@ -28,6 +28,6 @@ jobs:
 
       # ETAPA DE SAST COM SEMGREP
       - name: Semgrep Security Scan
-        uses: semgrep/action@v1
+        uses: semgrep/semgrep-action@v1
         with:
           config: "p/security-audit"
