@@ -1,0 +1,33 @@
+name: CI Pipeline with Semgrep SAST
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    # Dispara a pipeline ao abrir ou atualizar um Pull Request
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-sast:
+    name: Build and Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # ETAPA DE BUILD / DEPENDÊNCIAS
+      - name: "Configurar ambiente (Ex: Node.js)"
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependências
+        working-directory: ./app
+        run: npm install 
+
+      # ETAPA DE SAST COM SEMGREP
+      - name: Semgrep Security Scan
+        uses: semgrep/action@v1
+        with:
+          config: "p/security-audit"
